@@ -1,12 +1,19 @@
 package Day1;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Calculator {
+	
+	private void validate(List<Integer> nums) {
+		if (nums.isEmpty()) {
+		    throw new IllegalArgumentException("Empty input!");
+		}
+	}
 		
-	public ArrayList<Integer> input(Scanner scanner) {
-		ArrayList<Integer> arr= new ArrayList<Integer>();
+	public List<Integer> input(Scanner scanner) {
+		List<Integer> arr= new ArrayList<Integer>();
 		System.out.print("Enter multiple numbers as desired: (type X when you "
 				+ "finish the input to proceed calculations) \n");
 		String ch=new String();
@@ -15,30 +22,29 @@ public class Calculator {
 			if(ch.equalsIgnoreCase("X")) {
 				break;
 			}else {
+				try {
 				int nums=Integer.parseInt(ch);
 				arr.add(nums);
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Invalid Input! Enter only numbers. Type X to finish!");
+				}
 			}
 		}
 		return arr;
 	}
 		
 
-	public int add(ArrayList<Integer> nums) {
-		if (nums.isEmpty()) {
-		    System.out.println("No numbers entered!");
-		    return 0;
-		}
+	public int add(List<Integer> nums) {
+		validate(nums);
 		int sum=0;
 		for (int num: nums) {
 			sum+=num;
 		}
 		return sum;
 	}
-	public int sub(ArrayList<Integer> nums) {
-		if (nums.isEmpty()) {
-		    System.out.println("No numbers entered!");
-		    return 0;
-		}
+	public int sub(List<Integer> nums) {
+		validate(nums);
 		int result=nums.get(0);
 		for(int i=1;i<nums.size();i++) {
 			result-=nums.get(i);
@@ -46,56 +52,35 @@ public class Calculator {
 		}
 		return result;
 	}
-	public int mul(ArrayList<Integer> nums) {
-		if (nums.isEmpty()) {
-		    System.out.println("No numbers entered!");
-		    return 0;
-		}
+	public int mul(List<Integer> nums) {
+		validate(nums);
 		int result=1;
 		for(int num:nums) {
 			result*=num;
 		}
 		return result;
 	}
-	public int div(ArrayList<Integer> nums) {
-		if (nums.isEmpty()) {
-		    System.out.println("No numbers entered!");
-		    return 0;
-		}
+	public int div(List<Integer> nums) {
+		validate(nums);
 		int result=nums.get(0);
-		try {
+		
 			for(int i=1;i<nums.size();i++) {
 				if(nums.get(i)==0) {
-					System.out.println("Error: Division by zero!");
-					return 0;
+					throw new ArithmeticException("Division by zero error!");
 				}
 				result/=nums.get(i);
-			}
-			
-		}catch (ArithmeticException e){
-			System.out.println("Error: Division by zero!");
-			return 0;
 		}return result;
 	}
-	public int mod(ArrayList<Integer> nums) {
-		if (nums.isEmpty()) {
-		    System.out.println("No numbers entered!");
-		    return 0;
-		}
+	public int mod(List<Integer> nums) {
+		validate(nums);
 		int result=nums.get(0);
-		try {
 			for(int i=1;i<nums.size();i++) {
 				if(nums.get(i)==0) {
-					System.out.println("Error: Division by zero!");
-					return 0;
+					throw new ArithmeticException("Division by zero error!");
 				}
-
 				result%=nums.get(i);
 			}
-		}catch (ArithmeticException e){
-			System.out.println("Error: Division by zero!");
-			return 0;
-		}return result;
+		return result;
 	}
 	
 	
@@ -105,7 +90,7 @@ public class Calculator {
 		    
 		    int opt=0;
 			while(opt!=6) {
-			    System.out.println("\nchoose: \n1)Add \n"
+			    System.out.println("\nChoose: \n1)Add \n"
 			    		+ "2)Subtract\n"
 			    		+ "3)Multiply\n"
 			    		+ "4)Divide\n"
@@ -117,26 +102,60 @@ public class Calculator {
 			    	System.out.println("Invalid choice! Please select 1–6.");
 			    	continue;
 			    }
-			    ArrayList<Integer> nums= calc.input(scanner);
+			    List<Integer> nums= calc.input(scanner);
 			    
 			    
-			    switch (opt) {
-			    case 1:
-			    	System.out.print("\nAnswer: "+calc.add(nums));
-			    	break;
-			    case 2:
-			    	System.out.print("\nAnswer: "+calc.sub(nums));
-			    	break;
-			    case 3:
-			    	System.out.print("\nAnswer: "+calc.mul(nums));
-			    	break;
-			    case 4:
-			    	System.out.print("\nAnswer: "+calc.div(nums));
-			    	break;
-			    case 5:
-			    	System.out.print("\nAnswer: "+calc.mod(nums));
-			    	break;
-			    default: System.out.println("Invalid choice! Please select 1–6.");
+//			    switch (opt) {
+//			    case 1:
+//			    	try {
+//			    		System.out.print("\nAnswer: "+calc.add(nums));
+//			    		break;
+//			    	}catch(IllegalArgumentException e){
+//			    		System.out.print(e.getMessage());
+//			    	}
+//			    	
+//			    case 2:
+//			    	try {
+//				    	System.out.print("\nAnswer: "+calc.sub(nums));
+//				    	break;
+//				    	}catch(IllegalArgumentException e){
+//				    		System.out.print(e.getMessage());
+//				    	}
+//			    case 3:
+//			    	try {
+//				    	System.out.print("\nAnswer: "+calc.mul(nums));
+//				    	break;
+//				    	}catch(IllegalArgumentException e){
+//				    		System.out.print(e.getMessage());
+//				    	}
+//			    case 4:
+//			    	try {
+//				    	System.out.print("\nAnswer: "+calc.div(nums));
+//				    	break;
+//				    	}catch(IllegalArgumentException e){
+//				    		System.out.print(e.getMessage());
+//				    	}
+//			    case 5:
+//			    	try {
+//				    	System.out.print("\nAnswer: "+calc.mod(nums));
+//				    	break;
+//				    	}catch(IllegalArgumentException e){
+//				    		System.out.print(e.getMessage());
+//				    	}
+//			    	
+//			    }
+			    
+			    try {
+			    	switch(opt) {
+			    	case 1 -> System.out.print("\nAnswer: "+calc.add(nums));
+			    	case 2 -> System.out.print("\nAnswer: "+calc.sub(nums));
+			    	case 3 -> System.out.print("\nAnswer: "+calc.mul(nums));
+			    	case 4 -> System.out.print("\nAnswer: "+calc.div(nums));
+			    	case 5 -> System.out.print("\nAnswer: "+calc.mod(nums));
+			    	}
+			    }catch(IllegalArgumentException | ArithmeticException e){
+			    	System.out.println(e.getMessage());
+			    	
 			    }
 		}
 		    
