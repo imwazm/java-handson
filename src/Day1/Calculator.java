@@ -1,15 +1,26 @@
 package Day1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Calculator {
+
+
+
+
+public class Calculator extends BaseOperation{
 	
-	private void validate(List<Integer> nums) {
-		if (nums.isEmpty()) {
-		    throw new IllegalArgumentException("Empty input!");
-		}
+//	private void validate(List<Integer> nums) {
+//		if (nums.isEmpty()) {
+//		    throw new IllegalArgumentException("Empty input!");
+//		}
+//	}
+	@Override
+	public int execute(List<Integer> nums) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 		
 	public List<Integer> input(Scanner scanner) {
@@ -35,53 +46,53 @@ public class Calculator {
 	}
 		
 
-	public int add(List<Integer> nums) {
-		validate(nums);
-		int sum=0;
-		for (int num: nums) {
-			sum+=num;
-		}
-		return sum;
-	}
-	public int sub(List<Integer> nums) {
-		validate(nums);
-		int result=nums.get(0);
-		for(int i=1;i<nums.size();i++) {
-			result-=nums.get(i);
-			
-		}
-		return result;
-	}
-	public int mul(List<Integer> nums) {
-		validate(nums);
-		int result=1;
-		for(int num:nums) {
-			result*=num;
-		}
-		return result;
-	}
-	public int div(List<Integer> nums) {
-		validate(nums);
-		int result=nums.get(0);
-		
-			for(int i=1;i<nums.size();i++) {
-				if(nums.get(i)==0) {
-					throw new ArithmeticException("Division by zero error!");
-				}
-				result/=nums.get(i);
-		}return result;
-	}
-	public int mod(List<Integer> nums) {
-		validate(nums);
-		int result=nums.get(0);
-			for(int i=1;i<nums.size();i++) {
-				if(nums.get(i)==0) {
-					throw new ArithmeticException("Division by zero error!");
-				}
-				result%=nums.get(i);
-			}
-		return result;
-	}
+//	public int add(List<Integer> nums) {
+//		validate(nums);
+//		int sum=0;
+//		for (int num: nums) {
+//			sum+=num;
+//		}
+//		return sum;
+//	}
+//	public int sub(List<Integer> nums) {
+//		validate(nums);
+//		int result=nums.get(0);
+//		for(int i=1;i<nums.size();i++) {
+//			result-=nums.get(i);
+//			
+//		}
+//		return result;
+//	}
+//	public int mul(List<Integer> nums) {
+//		validate(nums);
+//		int result=1;
+//		for(int num:nums) {
+//			result*=num;
+//		}
+//		return result;
+//	}
+//	public int div(List<Integer> nums) {
+//		validate(nums);
+//		int result=nums.get(0);
+//		
+//			for(int i=1;i<nums.size();i++) {
+//				if(nums.get(i)==0) {
+//					throw new ArithmeticException("Division by zero error!");
+//				}
+//				result/=nums.get(i);
+//		}return result;
+//	}
+//	public int mod(List<Integer> nums) {
+//		validate(nums);
+//		int result=nums.get(0);
+//			for(int i=1;i<nums.size();i++) {
+//				if(nums.get(i)==0) {
+//					throw new ArithmeticException("Division by zero error!");
+//				}
+//				result%=nums.get(i);
+//			}
+//		return result;
+//	}
 	
 	
 	public static void main(String[] args) {
@@ -104,6 +115,24 @@ public class Calculator {
 			    }
 			    List<Integer> nums= calc.input(scanner);
 			    
+			    Map<Integer, Operation> operations=new HashMap<>();
+			    operations.put(1, new AddOperation());
+			    operations.put(2, new SubOperation());
+			    operations.put(3, new MulOperation());
+			    operations.put(4, new DivOperation());
+			    operations.put(5, new ModOperation());
+			    
+			    Operation operation=operations.get(opt);
+			    if(operation == null) {
+			    	System.out.println("Invalid Choice!");
+			    }
+			    try {
+			    	System.out.println("Answer: "+ operation.execute(nums));
+			    }catch(IllegalArgumentException | ArithmeticException e){
+			    	System.out.println(e.getMessage());
+			    }
+			    	
+			    }
 			    
 //			    switch (opt) {
 //			    case 1:
@@ -145,23 +174,26 @@ public class Calculator {
 //			    	
 //			    }
 			    
-			    try {
-			    	switch(opt) {
-			    	case 1 -> System.out.print("\nAnswer: "+calc.add(nums));
-			    	case 2 -> System.out.print("\nAnswer: "+calc.sub(nums));
-			    	case 3 -> System.out.print("\nAnswer: "+calc.mul(nums));
-			    	case 4 -> System.out.print("\nAnswer: "+calc.div(nums));
-			    	case 5 -> System.out.print("\nAnswer: "+calc.mod(nums));
-			    	}
-			    }catch(IllegalArgumentException | ArithmeticException e){
-			    	System.out.println(e.getMessage());
-			    	
-			    }
-		}
+//			    try {
+//			    	switch(opt) {
+//			    	case 1 -> System.out.print("\nAnswer: "+calc.add(nums));
+//			    	case 2 -> System.out.print("\nAnswer: "+calc.sub(nums));
+//			    	case 3 -> System.out.print("\nAnswer: "+calc.mul(nums));
+//			    	case 4 -> System.out.print("\nAnswer: "+calc.div(nums));
+//			    	case 5 -> System.out.print("\nAnswer: "+calc.mod(nums));
+//			    	}
+//			    }catch(IllegalArgumentException | ArithmeticException e){
+//			    	System.out.println(e.getMessage());
+//			    	
+//			    }
+		
 		    
 			scanner.close();
 
-		    }
+		    
+
+
+}
 	
 		    
 		    
