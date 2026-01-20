@@ -10,18 +10,14 @@ import java.util.Scanner;
 
 
 
-public class Calculator extends BaseOperation{
+public class Calculator{
 	
 //	private void validate(List<Integer> nums) {
 //		if (nums.isEmpty()) {
 //		    throw new IllegalArgumentException("Empty input!");
 //		}
 //	}
-	@Override
-	public int execute(List<Integer> nums) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 		
 	public List<Integer> input(Scanner scanner) {
 		List<Integer> arr= new ArrayList<Integer>();
@@ -100,6 +96,12 @@ public class Calculator extends BaseOperation{
 		    Calculator calc=new Calculator();
 		    
 		    int opt=0;
+		    Map<Integer, Operation> operations=new HashMap<>();
+		    operations.put(1, new AddOperation());
+		    operations.put(2, new SubOperation());
+		    operations.put(3, new MulOperation());
+		    operations.put(4, new DivOperation());
+		    operations.put(5, new ModOperation());
 			while(opt!=6) {
 			    System.out.println("\nChoose: \n1)Add \n"
 			    		+ "2)Subtract\n"
@@ -107,7 +109,13 @@ public class Calculator extends BaseOperation{
 			    		+ "4)Divide\n"
 			    		+ "5)Modulo\n"
 			    		+ "6)Exit");
-			    opt=scanner.nextInt();
+			    String choice=scanner.next();
+			    try{
+			    	opt=Integer.parseInt(choice);
+			    }catch(NumberFormatException e) {
+			    	System.out.println("Invalid Input!");
+			    	continue;
+			    }
 			    if (opt==6) break;
 			    if (opt < 1 || opt > 5) { 
 			    	System.out.println("Invalid choice! Please select 1–6.");
@@ -115,16 +123,12 @@ public class Calculator extends BaseOperation{
 			    }
 			    List<Integer> nums= calc.input(scanner);
 			    
-			    Map<Integer, Operation> operations=new HashMap<>();
-			    operations.put(1, new AddOperation());
-			    operations.put(2, new SubOperation());
-			    operations.put(3, new MulOperation());
-			    operations.put(4, new DivOperation());
-			    operations.put(5, new ModOperation());
+			    
 			    
 			    Operation operation=operations.get(opt);
 			    if(operation == null) {
 			    	System.out.println("Invalid Choice!");
+			    	continue;
 			    }
 			    try {
 			    	System.out.println("Answer: "+ operation.execute(nums));
