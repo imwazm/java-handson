@@ -102,13 +102,15 @@ public class Calculator{
 		    operations.put(3, new MulOperation());
 		    operations.put(4, new DivOperation());
 		    operations.put(5, new ModOperation());
-			while(opt!=6) {
+		    operations.put(6, new PowOperation());
+			while(opt!=7) {
 			    System.out.println("\nChoose: \n1)Add \n"
 			    		+ "2)Subtract\n"
 			    		+ "3)Multiply\n"
 			    		+ "4)Divide\n"
 			    		+ "5)Modulo\n"
-			    		+ "6)Exit");
+			    		+ "6)Power\n"
+			    		+ "7)Exit");
 			    String choice=scanner.next();
 			    try{
 			    	opt=Integer.parseInt(choice);
@@ -116,9 +118,9 @@ public class Calculator{
 			    	System.out.println("Invalid Input!");
 			    	continue;
 			    }
-			    if (opt==6) break;
-			    if (opt < 1 || opt > 5) { 
-			    	System.out.println("Invalid choice! Please select 1–6.");
+			    if (opt==7) break;
+			    if (opt < 1 || opt > 6) { 
+			    	System.out.println("Invalid choice! Please select 1–7.");
 			    	continue;
 			    }
 			    List<Integer> nums= calc.input(scanner);
