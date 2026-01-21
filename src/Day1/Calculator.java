@@ -97,6 +97,8 @@ public class Calculator{
 		    
 		    int opt=0;
 		    Map<Integer, Operation> operations=new HashMap<>();
+		    CalculatorService service=new CalculatorService(operations);
+
 		    operations.put(1, new AddOperation());
 		    operations.put(2, new SubOperation());
 		    operations.put(3, new MulOperation());
@@ -126,19 +128,15 @@ public class Calculator{
 			    List<Integer> nums= calc.input(scanner);
 			    
 			    
-			    
-			    Operation operation=operations.get(opt);
-			    if(operation == null) {
-			    	System.out.println("Invalid Choice!");
-			    	continue;
-			    }
 			    try {
-			    	System.out.println("Answer: "+ operation.execute(nums));
-			    }catch(IllegalArgumentException | ArithmeticException e){
+				    
+				    System.out.println("Answer: "+service.calculate(nums, opt));
+			    }catch(IllegalArgumentException e) {
 			    	System.out.println(e.getMessage());
 			    }
-			    	
-			    }
+			   
+			    
+			    
 			    
 //			    switch (opt) {
 //			    case 1:
@@ -194,14 +192,18 @@ public class Calculator{
 //			    }
 		
 		    
-			scanner.close();
+		
 
 		    
 
 
 }
+			scanner.close();
+			
+	}}
+	
 	
 		    
 		    
-	}
+	
 
